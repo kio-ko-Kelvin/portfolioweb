@@ -1,0 +1,375 @@
+{% extends "portfolioapp/base.html" %}
+{% load static %}
+
+{% block title %}
+{{ profile.name }} | {{ profile.profession }}
+{% endblock %}
+
+{% block description %}
+{{ profile.short_intro }}
+{% endblock %}
+
+{% block content %}
+
+{% if profile %}
+<!-- ================= HERO ================= -->
+
+<section id="home" class="hero">
+
+    <div class="hero-content">
+
+        <p class="hero-greeting">
+            Hello, I'm
+        </p>
+
+        <h1>{{ profile.name }}</h1>
+
+        <h2>{{ profile.profession }}</h2>
+
+        <p class="hero-text">
+            {{ profile.short_intro }}
+        </p>
+
+        <div class="hero-buttons">
+
+            {% if profile.cv %}
+                <a href="{{ profile.cv.url }}" class="btn-primary"> 
+                    Download CV
+                </a>
+            {% endif %}
+
+            <a href="#projects" class="btn-secondary">
+                View Projects
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-image">
+
+        {% if profile and profile.hero_image %}
+            <img
+                src="{{ profile.hero_image.url }}"
+                alt="{{ profile.name }}">
+        {% endif %}
+        
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about" class="section">
+
+    <div class="section-title">
+        <h2>About Me</h2>
+    </div>
+
+    <div class="about-grid">
+
+        <div>
+
+            {% if profile and profile.profile_image %}
+            <img
+                src="{{ profile.profile_image.url }}"
+                alt="{{ profile.name }}">
+            {% endif %}
+
+        </div>
+
+        <div>
+
+            <p>
+
+                {{ profile.bio|linebreaks }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= EDUCATION ================= -->
+
+<section id="education" class="section">
+
+    <div class="section-title">
+
+        <h2>Education</h2>
+
+    </div>
+
+    <div class="timeline">
+
+        {% for item in education %}
+
+        <article class="timeline-card">
+
+            <span class="year">
+                {{ item.year }}
+            </span>
+
+            <h3>
+
+                {{ item.course }}
+
+            </h3>
+
+            <h4>
+
+                {{ item.institution }}
+
+            </h4>
+
+            <p>
+
+                {{ item.description }}
+
+            </p>
+
+        </article>
+
+        {% empty %}
+
+        <p>No education records added yet.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ================= SKILLS ================= -->
+
+<section id="skills" class="section">
+
+    <div class="section-title">
+
+        <h2>Skills</h2>
+
+    </div>
+
+    <div class="skills-grid">
+
+        {% for skill in skills %}
+
+        <div class="skill-card">
+
+            <h3>
+
+                {{ skill.name }}
+
+            </h3>
+
+            <div class="progress">
+
+                <div 
+                    class="progress-bar" 
+                    style="width: {{ skill.percentage }}%;">
+                </div>
+
+            </div>
+
+            <span>
+
+                {{ skill.percentage }}%
+
+            </span>
+
+        </div>
+
+        {% empty %}
+
+        <p>No skills available.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ================= SERVICES ================= -->
+
+<section id="services" class="section">
+
+    <div class="section-title">
+
+        <h2>Services</h2>
+
+    </div>
+
+    <div class="services-grid">
+
+        {% for service in services %}
+
+        <article class="service-card">
+
+            <i class="{{ service.icon }}"></i>
+
+            <h3>
+
+                {{ service.title }}
+
+            </h3>
+
+            <p>
+
+                {{ service.description }}
+
+            </p>
+
+        </article>
+
+        {% empty %}
+
+        <p>No services available.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ================= PROJECTS ================= -->
+
+<section id="projects" class="section">
+
+    <div class="section-title">
+
+        <h2>Featured Projects</h2>
+
+    </div>
+
+    <div class="projects-grid">
+
+        {% for project in projects %}
+
+        <article class="project-card">
+
+            <img
+                src="{{ project.image.url }}"
+                alt="{{ project.title }}">
+
+            <div class="project-content">
+
+                <h3>
+
+                    {{ project.title }}
+
+                </h3>
+
+                <p>
+
+                    {{ project.description }}
+
+                </p>
+
+                <small>
+
+                    {{ project.technologies }}
+
+                </small>
+
+                <div class="project-buttons">
+
+                    {% if project.live_demo %}
+                    <a
+                        href="{{ project.live_demo }}"
+                        target="_blank">
+
+                        Live Demo
+
+                    </a>
+                    {% endif %}
+
+                    {% if project.github_url %}
+                    <a
+                        href="{{ project.github_url }}"
+                        target="_blank">
+
+                        GitHub
+
+                    </a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </article>
+
+        {% empty %}
+
+        <p>No projects have been added yet.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact" class="section">
+
+    <div class="section-title">
+
+        <h2>Contact</h2>
+
+    </div>
+
+    <div class="contact-card">
+
+        <p>
+
+            <strong>Email:</strong>
+
+            <a href="mailto:{{ profile.email }}">
+
+                {{ profile.email }}
+
+            </a>
+
+        </p>
+
+        {% if profile.phone %}
+        <p>
+
+            <strong>Phone:</strong>
+
+            {{ profile.phone }}
+        </p>
+        {% endif %}
+
+        <p>
+
+            <strong>Location:</strong>
+
+            {{ profile.location }}
+
+        </p>
+
+    </div>
+
+</section>
+
+{% else %}
+
+<section id="home" class="section" style="text-align: center;">
+    <div class="container">
+        <h2>No profile has been created yet.</h2>
+    </div>
+</section>
+
+{% endif %}
+
+{% endblock %}
