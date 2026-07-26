@@ -68,9 +68,9 @@ class Project(models.Model):
 
     image = models.ImageField(upload_to="projects/")
 
-    github_url = models.URLField(blank=True)
+    github_url = models.URLField(blank=True, null=True)
 
-    live_demo = models.URLField(blank=True)
+    live_demo = models.URLField(blank=True, null=True)
 
     technologies = models.CharField(max_length=150, default="unlisted")
 
