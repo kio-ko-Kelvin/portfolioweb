@@ -26,7 +26,8 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1",
+                "kioko-portfolioweb.vercel.com" ]
 
 
 # Application definition
@@ -77,13 +78,9 @@ WSGI_APPLICATION = 'portfoliowebsite.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('db_name'),
-        'USER': os.getenv('db_user'),
-        'PASSWORD': os.getenv('db_password'),
-        "HOST": os.getenv('db_host'),
-        "PORT": os.getenv("db_port"),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
