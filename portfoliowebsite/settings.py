@@ -27,7 +27,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
 ALLOWED_HOSTS = ["127.0.0.1",
-                "kioko-portfolioweb.vercel.com" ]
+                "portfolioweb-kelvin.vercel.app",
+                ".vercel.app"]
 
 
 # Application definition
