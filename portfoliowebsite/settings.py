@@ -80,8 +80,8 @@ WSGI_APPLICATION = 'portfoliowebsite.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": os.environ["MYSQLDATABASE"],
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "sqlite3",
     }
 }
 
