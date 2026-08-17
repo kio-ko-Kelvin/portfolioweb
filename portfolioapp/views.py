@@ -5,7 +5,6 @@ from .models import (
     Project,
     Skill,
     Service,
-    Education,
 )
 
 
@@ -22,14 +21,11 @@ def home(request):
 
     services = Service.objects.all()
 
-    education = Education.objects.all()
-
     context = {
         "profile": profile,
         "projects": featured_projects,
         "skills": skills,
         "services": services,
-        "education": education,
     }
 
     return render(
