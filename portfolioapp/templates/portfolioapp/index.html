@@ -93,56 +93,6 @@
 
 </section>
 
-<!-- ================= SKILLS ================= -->
-
-<section id="skills" class="section">
-
-    <div class="section-title">
-
-        <h2>Skills</h2>
-
-    </div>
-
-    <div class="skills-grid">
-
-        {% for skill in skills %}
-
-        <div class="skill-card">
-
-            <h3>
-
-                {{ skill.name }}
-
-            </h3>
-
-            <div class="progress">
-
-                <div 
-                    class="progress-bar" 
-                    style="width: {{ skill.percentage }}%;">
-                </div>
-
-            </div>
-
-            <span>
-
-                {{ skill.percentage }}%
-
-            </span>
-
-        </div>
-
-        {% empty %}
-
-        <p>No skills available.</p>
-
-        {% endfor %}
-
-    </div>
-
-</section>
-
-
 <!-- ================= SERVICES ================= -->
 
 <section id="services" class="section">

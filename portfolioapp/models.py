@@ -27,15 +27,6 @@ class Profile(models.Model):
         return self.name
 
 
-class Skill(models.Model):
-    name = models.CharField(max_length=100)
-
-    percentage = models.PositiveIntegerField(default=80)
-
-    def __str__(self):
-        return self.name
-
-
 class Service(models.Model):
     title = models.CharField(max_length=100)
 

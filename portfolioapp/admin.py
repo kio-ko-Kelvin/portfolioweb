@@ -19,18 +19,6 @@ class ProfileAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(Skill)
-class SkillAdmin(admin.ModelAdmin):
-
-    list_display = (
-        "name",
-        "percentage",
-    )
-
-    list_editable = (
-        "percentage",
-    )
-
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
 
