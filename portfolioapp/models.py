@@ -27,22 +27,6 @@ class Profile(models.Model):
         return self.name
 
 
-class Education(models.Model):
-    institution = models.CharField(max_length=150)
-
-    course = models.CharField(max_length=150)
-
-    year = models.CharField(max_length=30)
-
-    description = models.TextField()
-
-    class Meta:
-        ordering = ["-year"]
-
-    def __str__(self):
-        return f"{self.course} - {self.institution}"
-
-
 class Skill(models.Model):
     name = models.CharField(max_length=100)
 

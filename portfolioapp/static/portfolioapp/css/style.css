@@ -704,6 +704,19 @@ body.dark #theme-toggle,
 body.dark #menu-btn i,
 body.dark #theme-toggle i{color:#fff;}
 #menu-btn:hover,#theme-toggle:hover{color:var(--primary);}
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 2rem 9%;
+}
+
+.footer-text p{
+    font-size: 1.6rem;
+}
+
 @media(max-width:900px){
  .menu-btn{display:block;color:var(--text);}
  body.dark .menu-btn{color:#fff;}

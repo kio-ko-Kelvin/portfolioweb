@@ -6,7 +6,6 @@ from .models import (
     Project,
     Skill,
     Service,
-    Education,
 )
 
 
@@ -19,19 +18,6 @@ class ProfileAdmin(admin.ModelAdmin):
         "phone",
     )
 
-@admin.register(Education)
-class EducationAdmin(admin.ModelAdmin):
-
-    list_display = (
-        "course",
-        "institution",
-        "year",
-    )
-
-    search_fields = (
-        "course",
-        "institution",
-    )
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
