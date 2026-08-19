@@ -54,4 +54,15 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+class Contact(models.Model):
+    fullname = models.CharField(max_length=50)
+
+    emailaddress = models.URLField(blank=False, null=False)
+
+    mobilenumber = models.IntegerField()
+
+    message = models.CharField(max_length=500, null=False, blank=False)
+
+    created = models.DateTimeField(auto_now_add=True)
     
