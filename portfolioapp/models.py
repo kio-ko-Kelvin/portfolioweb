@@ -47,8 +47,6 @@ class Project(models.Model):
 
     live_demo = models.URLField(blank=True, null=True)
 
-    technologies = models.CharField(max_length=150, default="unlisted")
-
     created = models.DateField(auto_now_add=True)
 
     class Meta:

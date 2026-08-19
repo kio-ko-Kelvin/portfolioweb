@@ -33,7 +33,6 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = (
         "title",
         "created",
-        "technologies"
     )
 
     list_filter = (
@@ -43,7 +42,6 @@ class ProjectAdmin(admin.ModelAdmin):
     search_fields = (
         "title",
         "description",
-        "technologies",
     )
 
     fieldsets = (
@@ -80,15 +78,6 @@ class ProjectAdmin(admin.ModelAdmin):
                 "fields": (
                     "github_url",
                     "live_demo",
-                )
-            },
-        ),
-
-        (
-            "Technology",
-            {
-                "fields": (
-                    "technologies",
                 )
             },
         ),
