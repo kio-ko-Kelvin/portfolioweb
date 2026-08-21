@@ -400,28 +400,6 @@ body.dark header{
 
 }
 
-.progress{
-
-    margin:1rem 0;
-
-    height:10px;
-
-    background:#ddd;
-
-    border-radius:30px;
-
-}
-
-.progress-bar{
-
-    background:var(--primary);
-
-    height:100%;
-
-    border-radius:30px;
-
-}
-
 
 .projects-grid{
 
@@ -503,20 +481,12 @@ body.dark header{
 }
 
 
-.contact-card{
+.contact form{
 
-    width:min(700px,92%);
-
-    margin:auto;
-
-    background:var(--surface);
-
-    padding:3rem;
-
-    border-radius:18px;
-
-    box-shadow:var(--shadow);
-
+    max-width: 70rem;
+    margin: 1rem auto;
+    text-align: center;
+    margin-bottom: 3rem;
 }
 
 
