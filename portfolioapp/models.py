@@ -58,13 +58,13 @@ class Project(models.Model):
 class Contact(models.Model):
     fullname = models.CharField(max_length=50)
 
-    emailaddress = models.URLField(blank=False, null=False)
+    emailaddress = models.URLField(blank=False, null=False, max_length=50)
 
-    mobilenumber = models.IntegerField()
+    mobilenumber = models.IntegerField(max_length=10)
 
-    emailsubject = models.TextField(max_length=100, default="blank mail")
+    emailsubject = models.CharField(max_length=100, default="")
 
-    message = models.CharField(max_length=500, null=False, blank=False)
+    message = models.TextField(max_length=500, null=False, blank=False)
 
     created = models.DateTimeField(auto_now_add=True)
 

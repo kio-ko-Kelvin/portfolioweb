@@ -8,14 +8,6 @@ from .models import (
     Contact,
 )
 
-@admin.register(Contact)
-class ContactAdmin(admin.ModelAdmin):
-    list_display = (
-        "fullname",
-        "emailsubject",
-        "message",
-    )
-
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = (
@@ -92,3 +84,11 @@ class ProjectAdmin(admin.ModelAdmin):
         ),
     )
 
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = (
+        "fullname",
+        "emailsubject",
+        "message",
+    )
