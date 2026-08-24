@@ -62,7 +62,7 @@ class Contact(models.Model):
 
     mobilenumber = models.IntegerField()
 
-    emailsubject = models.TextField(max_length=100, null=False, blank=False)
+    emailsubject = models.TextField(max_length=100, default="blank mail")
 
     message = models.CharField(max_length=500, null=False, blank=False)
 

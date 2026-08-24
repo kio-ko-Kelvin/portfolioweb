@@ -5,8 +5,16 @@ from .models import (
     Profile,
     Project,
     Service,
+    Contact,
 )
 
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = (
+        "fullname",
+        "emailsubject",
+        "message",
+    )
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
