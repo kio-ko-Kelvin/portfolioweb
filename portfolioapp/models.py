@@ -62,7 +62,11 @@ class Contact(models.Model):
 
     mobilenumber = models.IntegerField()
 
+    emailsubject = models.TextField(max_length=100, null=False, blank=False)
+
     message = models.CharField(max_length=500, null=False, blank=False)
 
     created = models.DateTimeField(auto_now_add=True)
-    
+
+    def __str__(self):
+        return self.fullname + "" + self.emailsubject

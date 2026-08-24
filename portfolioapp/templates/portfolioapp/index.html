@@ -223,17 +223,25 @@
 
     </div>
 
-    <form action="#">
+    <form method="POST" action="{% url  'admin' %}">
+        {% csrf_token %}
         <div class="input-box">
-            <input type="text" placeholder="Full Name">
-            <input type="email" placeholder="Email Address">
+            <input type="text" placeholder="Full Name" name="fullname">
         </div>
 
         <div class="input-box">
-            <input type="number" placeholder="Mobile number">
-            <input type="text" placeholder="Email Subject">
+            <input type="email" placeholder="Email Address", name="emailaddress">
         </div>
-        <textarea name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
+
+        <div class="input-box">
+            <input type="number" placeholder="Mobile number", name="mobilenumber">
+        </div>
+
+        <div class="input-box">
+            <input type="text" placeholder="Email Subject", name="emailsubject">
+        </div>
+
+        <textarea id="submitbutton" cols="30" rows="10" placeholder="Your Message" name="message"></textarea>
         <input type="submit" value="Send Message" class="btn">
     </form>
 
