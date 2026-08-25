@@ -24,7 +24,7 @@ def home(request):
                 request,
                 "Your message has been sent successfully!"
             )
-            return redirect(home)
+            return redirect('home')
 
         else:
             messages.error(
