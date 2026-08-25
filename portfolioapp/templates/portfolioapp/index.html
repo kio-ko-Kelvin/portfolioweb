@@ -225,29 +225,32 @@
 
     <form method="POST" action="{% url 'portfolioapp:home' %}">
         {% csrf_token %}
-
-        <div>
-            {{ form.name }}
-            {{ form.name.errors }}
+        <div class="input-box">
+            <input type="text" placeholder="Full Name" name="fullname" value="{{ fullname }}">
         </div>
 
-        <div>
-            {{ form.email }}
-            {{ form.email.errors }}
+        <div class="input-box">
+            <input type="email" placeholder="Email Address", name="emailaddress", value="{{ emailaddress }}">
         </div>
 
-        <div>
-            {{ form.subject }}
-            {{ form.subject.errors }}
+        <div class="input-box">
+            <input type="number" placeholder="Mobile number", name="mobilenumber", value="{{ mobilenumber }}">
         </div>
 
-        <div>
-            {{ form.message }}
-            {{ form.message.errors }}
+        <div class="input-box">
+            <input type="text" placeholder="Email Subject", name="emailsubject", value="{{ emailsubject }}">
         </div>
 
-        <button type="submit">Send Message</button>
+        <div class="input-box">
+            <textarea id='' cols="30" rows="10" placeholder="Your Message" name="message"></textarea>
+        </div>
+        
+        <div class="submit-button">
+            <input id="Submit-button" type="submit" value="Send Message" class="btn">
+        </div>
     </form>
+
+    
 
 </section>
 
