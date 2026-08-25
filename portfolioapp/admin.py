@@ -86,7 +86,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 @admin.register(ContactMessage)
-class ContactAdmin(admin.ModelAdmin):
+class ContactMessageAdmin(admin.ModelAdmin):
     list_display = (
         "fullname",
         "emailsubject",
