@@ -5,7 +5,7 @@ from .models import (
     Profile,
     Project,
     Service,
-    Contact,
+    ContactMessage,
 )
 
 @admin.register(Profile)
@@ -85,7 +85,7 @@ class ProjectAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(Contact)
+@admin.register(ContactMessage)
 class ContactAdmin(admin.ModelAdmin):
     list_display = (
         "fullname",
