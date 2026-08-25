@@ -1,4 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import ContactMessageForm
 
 from .models import (
     Profile,
@@ -12,6 +14,28 @@ def home(request):
     Portfolio homepage.
     """
 
+    if request.method == "POST":
+        form = ContactMessageForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            messages.success(
+                request,
+                "Your message has been sent successfully!"
+            )
+            return redirect(home)
+
+        else:
+            messages.error(
+                request,
+                "There was a problem sending your message. Please check the form."
+            )
+
+    else:
+        form = ContactMessageForm()
+
+
     profile = Profile.objects.first()
     
     featured_projects = Project.objects.all()
@@ -22,6 +46,7 @@ def home(request):
         "profile": profile,
         "projects": featured_projects,
         "services": services,
+        "form": form
     }
 
     return render(
