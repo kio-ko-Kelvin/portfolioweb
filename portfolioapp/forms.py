@@ -4,7 +4,7 @@ from .models import ContactMessage
 class ContactMessageForm(forms.ModelForm):
     class Meta:
         model = ContactMessage
-        fields = ["fullname", "emailaddress", "mobilenumber", "emailsubject", "message", "created"]
+        fields = ["fullname", "emailaddress", "mobilenumber", "emailsubject", "message"]
 
         widgets = {
             "fullname": forms.TextInput(attrs={
