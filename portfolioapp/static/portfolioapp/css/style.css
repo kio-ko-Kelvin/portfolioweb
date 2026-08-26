@@ -726,3 +726,31 @@ body.dark #theme-toggle i{color:#fff;}
  .menu-btn{display:block;color:var(--text);}
  body.dark .menu-btn{color:#fff;}
 }
+
+.message {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 16px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+}
+
+.message-close {
+    color: inherit;
+    border: none;
+    background: transparent;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.message.success {
+    /* your success styling */
+    color: #22c55e;
+}
+
+.message.error {
+    /* your error styling */
+    color: #ef4444;
+}

@@ -228,7 +228,16 @@
         {% if messages %}
             {% for message in messages %}
                 <div class="message {{ message.tags }}">
-                    {{ message }}
+                    <span>{{ message }}</span>
+
+                    <button
+                        type="button"
+                        class="message-close"
+                        onclick="this.parentElement.remove()"
+                        aria-label="Close notification"
+                    >
+                        &times;
+                    </button>
                 </div>
             {% endfor %}
         {% endif %}
