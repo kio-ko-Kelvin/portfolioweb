@@ -46,7 +46,7 @@ def home(request):
         "profile": profile,
         "projects": featured_projects,
         "services": services,
-        "form": form
+        "form": form,
     }
 
     return render(
