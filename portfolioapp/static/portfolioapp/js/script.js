@@ -1,345 +1,356 @@
-// ========================================
+// =========================================================
 // PORTFOLIO SCRIPT
 // Kelvin Kioko Portfolio
-// ========================================
+// =========================================================
 
 document.addEventListener("DOMContentLoaded", () => {
+    "use strict";
 
-    // ========================================
+    // =====================================================
     // ELEMENTS
-    // ========================================
+    // =====================================================
 
     const body = document.body;
-
     const header = document.querySelector("header");
 
     const menuButton = document.getElementById("menu-btn");
-
     const navLinks = document.querySelector(".nav-links");
 
     const themeButton = document.getElementById("theme-toggle");
+    const themeIcon = themeButton?.querySelector("i");
 
-    const themeIcon = themeButton.querySelector("i");
-
-
-
-    // ========================================
+    // =====================================================
     // MOBILE MENU
-    // ========================================
+    // =====================================================
 
-    function openMenu() {
+    function setMenuState(isOpen) {
+        if (!menuButton || !navLinks) {
+            return;
+        }
 
-        navLinks.classList.add("active");
+        navLinks.classList.toggle("active", isOpen);
+
+        menuButton.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
+
+        menuButton.setAttribute(
+            "aria-label",
+            isOpen
+                ? "Close navigation menu"
+                : "Open navigation menu"
+        );
 
         const icon = menuButton.querySelector("i");
 
-        icon.classList.remove("fa-bars");
-
-        icon.classList.add("fa-xmark");
-
+        if (icon) {
+            icon.classList.toggle("fa-bars", !isOpen);
+            icon.classList.toggle("fa-xmark", isOpen);
+        }
     }
-
-
-    function closeMenu() {
-
-        navLinks.classList.remove("active");
-
-        const icon = menuButton.querySelector("i");
-
-        icon.classList.remove("fa-xmark");
-
-        icon.classList.add("fa-bars");
-
-    }
-
 
     function toggleMenu() {
-
-        if (navLinks.classList.contains("active")) {
-
-            closeMenu();
-
-        } else {
-
-            openMenu();
-
+        if (!navLinks) {
+            return;
         }
 
+        const isOpen = navLinks.classList.contains("active");
+
+        setMenuState(!isOpen);
     }
 
+    menuButton?.addEventListener("click", toggleMenu);
 
-    menuButton.addEventListener("click", toggleMenu);
-
-
-
-    // ========================================
-    // CLOSE MENU AFTER CLICKING A LINK
-    // ========================================
-
-    document.querySelectorAll(".nav-links a").forEach(link => {
-
+    // Close menu after clicking a navigation link.
+    document.querySelectorAll(".nav-links a").forEach((link) => {
         link.addEventListener("click", () => {
-
-            closeMenu();
-
+            setMenuState(false);
         });
-
     });
 
+    // Close mobile navigation when returning to desktop.
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 900) {
+            setMenuState(false);
+        }
+    });
 
-
-    // ========================================
+    // =====================================================
     // DARK MODE
-    // ========================================
+    // =====================================================
 
     function setTheme(theme) {
+        const isDark = theme === "dark";
 
-        if (theme === "dark") {
+        body.classList.toggle("dark", isDark);
 
-            body.classList.add("dark");
-
-            themeIcon.classList.remove("fa-moon");
-
-            themeIcon.classList.add("fa-sun");
-
+        if (themeIcon) {
+            themeIcon.classList.toggle("fa-moon", !isDark);
+            themeIcon.classList.toggle("fa-sun", isDark);
         }
 
-        else {
+        if (themeButton) {
+            themeButton.setAttribute(
+                "aria-pressed",
+                String(isDark)
+            );
 
-            body.classList.remove("dark");
-
-            themeIcon.classList.remove("fa-sun");
-
-            themeIcon.classList.add("fa-moon");
-
+            themeButton.setAttribute(
+                "aria-label",
+                isDark
+                    ? "Switch to light mode"
+                    : "Switch to dark mode"
+            );
         }
 
-        localStorage.setItem("theme", theme);
-
+        localStorage.setItem(
+            "theme",
+            isDark ? "dark" : "light"
+        );
     }
 
+    function getInitialTheme() {
+        const savedTheme = localStorage.getItem("theme");
 
-
-    const savedTheme = localStorage.getItem("theme");
-
-    if (savedTheme === "dark") {
-
-        setTheme("dark");
-
-    }
-
-    else {
-
-        setTheme("light");
-
-    }
-
-
-
-    themeButton.addEventListener("click", () => {
-
-        if (body.classList.contains("dark")) {
-
-            setTheme("light");
-
+        // User's previous choice takes priority.
+        if (
+            savedTheme === "dark" ||
+            savedTheme === "light"
+        ) {
+            return savedTheme;
         }
 
-        else {
+        // Otherwise follow the operating system preference.
+        return window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        ).matches
+            ? "dark"
+            : "light";
+    }
 
-            setTheme("dark");
+    setTheme(getInitialTheme());
 
-        }
+    themeButton?.addEventListener("click", () => {
+        const newTheme = body.classList.contains("dark")
+            ? "light"
+            : "dark";
 
+        setTheme(newTheme);
     });
 
-
-
-    // ========================================
-    // STICKY HEADER
-    // ========================================
-
-    function updateHeader() {
-
-        if (window.scrollY > 50) {
-
-            header.classList.add("sticky");
-
-        }
-
-        else {
-
-            header.classList.remove("sticky");
-
-        }
-
-    }
-
-    updateHeader();
-
-    window.addEventListener("scroll", updateHeader);
-
-
-
-    // ========================================
-    // DESKTOP RESET
-    // ========================================
-
-    window.addEventListener("resize", () => {
-
-        if (window.innerWidth > 900) {
-
-            closeMenu();
-
-        }
-
-    });
-
-        // ========================================
+    // =====================================================
     // ACTIVE NAVIGATION
-    // ========================================
+    // =====================================================
 
-    const sections = document.querySelectorAll("section");
+    const sections = document.querySelectorAll(
+        "main section[id]"
+    );
 
-    const navigationLinks = document.querySelectorAll(".nav-links a");
+    const navigationLinks = document.querySelectorAll(
+        ".nav-links a"
+    );
 
     function updateActiveLink() {
+        if (
+            !sections.length ||
+            !navigationLinks.length
+        ) {
+            return;
+        }
+
+        const scrollPosition =
+            window.scrollY + 160;
 
         let currentSection = "";
 
-        sections.forEach(section => {
-
-            const sectionTop = section.offsetTop - 140;
-
-            const sectionHeight = section.offsetHeight;
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionBottom =
+                sectionTop + section.offsetHeight;
 
             if (
-                window.scrollY >= sectionTop &&
-                window.scrollY < sectionTop + sectionHeight
+                scrollPosition >= sectionTop &&
+                scrollPosition < sectionBottom
             ) {
                 currentSection = section.id;
             }
-
         });
 
-        navigationLinks.forEach(link => {
-
-            link.classList.remove("active");
-
-            if (link.getAttribute("href") === `#${currentSection}`) {
-
-                link.classList.add("active");
-
-            }
-
-        });
-
-    }
-
-    updateActiveLink();
-
-    window.addEventListener("scroll", updateActiveLink);
-
-
-
-    // ========================================
-    // SCROLL ANIMATIONS
-    // ========================================
-
-    const observer = new IntersectionObserver(
-
-        (entries) => {
-
-            entries.forEach(entry => {
-
-                if (entry.isIntersecting) {
-
-                    entry.target.classList.add("show");
-
-                }
-
-            });
-
-        },
-
-        {
-            threshold: 0.15
+        // Make the final section active at the bottom.
+        if (
+            window.innerHeight + window.scrollY >=
+            document.documentElement.scrollHeight - 5
+        ) {
+            currentSection =
+                sections[sections.length - 1].id;
         }
 
+        navigationLinks.forEach((link) => {
+            const isActive =
+                link.getAttribute("href") ===
+                `#${currentSection}`;
+
+            link.classList.toggle(
+                "active",
+                isActive
+            );
+
+            if (isActive) {
+                link.setAttribute(
+                    "aria-current",
+                    "page"
+                );
+            } else {
+                link.removeAttribute(
+                    "aria-current"
+                );
+            }
+        });
+    }
+
+    // =====================================================
+    // STICKY HEADER
+    // =====================================================
+
+    function updateHeader() {
+        if (!header) {
+            return;
+        }
+
+        header.classList.toggle(
+            "sticky",
+            window.scrollY > 50
+        );
+    }
+
+    // =====================================================
+    // SCROLL TO TOP
+    // =====================================================
+
+    function createScrollTopButton() {
+        const button =
+            document.createElement("button");
+
+        button.type = "button";
+        button.id = "scrollTop";
+
+        button.setAttribute(
+            "aria-label",
+            "Scroll to top"
+        );
+
+        button.innerHTML =
+            '<i class="fa-solid fa-arrow-up" aria-hidden="true"></i>';
+
+        document.body.appendChild(button);
+
+        button.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        });
+
+        return button;
+    }
+
+    const topButton =
+        createScrollTopButton();
+
+    function updateScrollTopButton() {
+        topButton.classList.toggle(
+            "show",
+            window.scrollY > 600
+        );
+    }
+
+    // =====================================================
+    // COMBINED SCROLL HANDLER
+    // =====================================================
+
+    function handleScroll() {
+        updateHeader();
+        updateActiveLink();
+        updateScrollTopButton();
+    }
+
+    window.addEventListener(
+        "scroll",
+        handleScroll,
+        {
+            passive: true,
+        }
     );
 
-    document.querySelectorAll(
+    // Run once immediately.
+    handleScroll();
 
-        ".section, .hero, .project-card, .service-card"
+    // =====================================================
+    // SCROLL REVEAL ANIMATIONS
+    // =====================================================
 
-    ).forEach(element => {
+    const revealElements =
+        document.querySelectorAll(
+            ".section, .hero, .project-card, .service-card"
+        );
 
-        element.classList.add("hidden");
+    if (
+        "IntersectionObserver" in window
+    ) {
+        const observer =
+            new IntersectionObserver(
+                (entries, observerInstance) => {
+                    entries.forEach(
+                        (entry) => {
+                            if (
+                                entry.isIntersecting
+                            ) {
+                                entry.target.classList.add(
+                                    "show"
+                                );
 
-        observer.observe(element);
+                                observerInstance.unobserve(
+                                    entry.target
+                                );
+                            }
+                        }
+                    );
+                },
+                {
+                    threshold: 0.15,
+                }
+            );
 
-    });
+        revealElements.forEach(
+            (element) => {
+                element.classList.add(
+                    "hidden"
+                );
 
-
-
-    // ========================================
-    // SCROLL TO TOP BUTTON
-    // ========================================
-
-    const topButton = document.createElement("button");
-
-    topButton.id = "scrollTop";
-
-    topButton.innerHTML =
-        '<i class="fa-solid fa-arrow-up"></i>';
-
-    document.body.appendChild(topButton);
-
-
-    function toggleTopButton() {
-
-        if (window.scrollY > 600) {
-
-            topButton.classList.add("show");
-
-        }
-
-        else {
-
-            topButton.classList.remove("show");
-
-        }
-
+                observer.observe(element);
+            }
+        );
+    } else {
+        // Fallback for older browsers.
+        revealElements.forEach(
+            (element) => {
+                element.classList.add(
+                    "show"
+                );
+            }
+        );
     }
 
-    toggleTopButton();
-
-    window.addEventListener("scroll", toggleTopButton);
-
-
-    topButton.addEventListener("click", () => {
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-    });
-
-
-
-    // ========================================
+    // =====================================================
     // CURRENT YEAR
-    // ========================================
+    // =====================================================
 
-    const year = document.querySelector("#year");
+    const yearElement =
+        document.getElementById("year");
 
-    if (year) {
-
-        year.textContent = new Date().getFullYear();
-
+    if (yearElement) {
+        yearElement.textContent =
+            new Date().getFullYear();
     }
-
 });

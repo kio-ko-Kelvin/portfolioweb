@@ -2,304 +2,308 @@
 {% load static %}
 
 {% block title %}
-{{ profile.name }} | {{ profile.profession }}
+    {{ profile.name }} | {{ profile.profession }}
 {% endblock %}
 
 {% block description %}
-{{ profile.short_intro }}
+    {{ profile.short_intro }}
 {% endblock %}
 
 {% block content %}
 
 {% if profile %}
-<!-- ================= HERO ================= -->
 
-<section id="home" class="hero">
+    <!-- ================= HERO ================= -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <p class="hero-greeting">Hello, I'm</p>
 
-    <div class="hero-content">
+            <h1>{{ profile.name }}</h1>
 
-        <p class="hero-greeting">
-            Hello, I'm
-        </p>
+            <h2>{{ profile.profession }}</h2>
 
-        <h1>{{ profile.name }}</h1>
+            <p class="hero-text">
+                {{ profile.short_intro }}
+            </p>
 
-        <h2>{{ profile.profession }}</h2>
+            <div class="hero-buttons">
+                {% if profile.cv %}
+                    <a
+                        href="{{ profile.cv.url }}"
+                        class="btn-primary"
+                        download
+                    >
+                        Download CV
+                    </a>
+                {% endif %}
 
-        <p class="hero-text">
-            {{ profile.short_intro }}
-        </p>
-
-        <div class="hero-buttons">
-
-            {% if profile.cv %}
-                <a href="{{ profile.cv.url }}" class="btn-primary"> 
-                    Download CV
+                <a href="#projects" class="btn-secondary">
+                    View Projects
                 </a>
-            {% endif %}
-
-            <a href="#projects" class="btn-secondary">
-                View Projects
-            </a>
-
+            </div>
         </div>
 
-    </div>
-
-    <div class="hero-image">
-
-        {% if profile and profile.hero_image %}
-            <img
-                src="{{ profile.hero_image.url }}"
-                alt="{{ profile.name }}">
+        {% if profile.hero_image %}
+            <div class="hero-image">
+                <img
+                    src="{{ profile.hero_image.url }}"
+                    alt="{{ profile.name }}"
+                >
+            </div>
         {% endif %}
-        
-    </div>
+    </section>
 
-</section>
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="section">
+        <div class="section-title">
+            <h2>About Me</h2>
+        </div>
 
-
-<!-- ================= ABOUT ================= -->
-
-<section id="about" class="section">
-
-    <div class="section-title">
-        <h2>About Me</h2>
-    </div>
-
-    <div class="about-grid">
-
-        <div>
-
-            {% if profile and profile.profile_image %}
-            <img
-                src="{{ profile.profile_image.url }}"
-                alt="{{ profile.name }}">
+        <div class="about-grid">
+            {% if profile.profile_image %}
+                <div>
+                    <img
+                        src="{{ profile.profile_image.url }}"
+                        alt="{{ profile.name }}"
+                    >
+                </div>
             {% endif %}
 
-        </div>
-
-        <div>
-
-            <p>
-
+            <div>
                 {{ profile.bio|linebreaks }}
+            </div>
+        </div>
+    </section>
 
-            </p>
-
+    <!-- ================= SERVICES ================= -->
+    <section id="services" class="section">
+        <div class="section-title">
+            <h2>Services</h2>
         </div>
 
-    </div>
+        <div class="services-grid">
+            {% for service in services %}
+                <article class="service-card">
+                    <h3>{{ service.title }}</h3>
+                    <p>{{ service.description }}</p>
+                </article>
+            {% empty %}
+                <p class="empty-state">No services available.</p>
+            {% endfor %}
+        </div>
+    </section>
 
-</section>
+    <!-- ================= PROJECTS ================= -->
+    <section id="projects" class="section">
+        <div class="section-title">
+            <h2>Featured Projects</h2>
+        </div>
 
-<!-- ================= SERVICES ================= -->
-
-<section id="services" class="section">
-
-    <div class="section-title">
-
-        <h2>Services</h2>
-
-    </div>
-
-    <div class="services-grid">
-
-        {% for service in services %}
-
-        <article class="service-card">
-
-            <h3>
-
-                {{ service.title }}
-
-            </h3>
-
-            <p>
-
-                {{ service.description }}
-
-            </p>
-
-        </article>
-
-        {% empty %}
-
-        <p>No services available.</p>
-
-        {% endfor %}
-
-    </div>
-
-</section>
-
-
-<!-- ================= PROJECTS ================= -->
-
-<section id="projects" class="section">
-
-    <div class="section-title">
-
-        <h2>Featured Projects</h2>
-
-    </div>
-
-    <div class="projects-grid">
-
-        {% for project in projects %}
-
-        <article class="project-card">
-
-            <img
-                src="{{ project.image.url }}"
-                alt="{{ project.title }}">
-
-            <div class="project-content">
-
-                <h3>
-
-                    {{ project.title }}
-
-                </h3>
-
-                <p>
-
-                    {{ project.description }}
-
-                </p>
-
-                <small>
-
-                    {{ project.technologies }}
-
-                </small>
-
-                <div class="project-buttons">
-
-                    {% if project.live_demo %}
-                    <a
-                        href="{{ project.live_demo }}"
-                        target="_blank">
-
-                        Live Demo
-
-                    </a>
+        <div class="projects-grid">
+            {% for project in projects %}
+                <article class="project-card">
+                    {% if project.image %}
+                        <img
+                            src="{{ project.image.url }}"
+                            alt="{{ project.title }}"
+                        >
                     {% endif %}
 
-                    {% if project.github_url %}
-                    <a
-                        href="{{ project.github_url }}"
-                        target="_blank">
+                    <div class="project-content">
+                        <h3>{{ project.title }}</h3>
 
-                        GitHub
+                        <p>{{ project.description }}</p>
 
-                    </a>
-                    {% endif %}
+                        {% if project.technologies %}
+                            <small>{{ project.technologies }}</small>
+                        {% endif %}
 
+                        {% if project.live_demo or project.github_url %}
+                            <div class="project-buttons">
+                                {% if project.live_demo %}
+                                    <a
+                                        href="{{ project.live_demo }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Live Demo
+                                    </a>
+                                {% endif %}
+
+                                {% if project.github_url %}
+                                    <a
+                                        href="{{ project.github_url }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        GitHub
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </article>
+            {% empty %}
+                <p class="empty-state">No projects have been added yet.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section id="contact" class="section">
+        <div class="section-title">
+            <h2>Contact Me</h2>
+        </div>
+
+        <form
+            method="POST"
+            action="{% url 'portfolioapp:home' %}"
+            class="contact-form"
+        >
+            {% csrf_token %}
+
+            {% if messages %}
+                <div class="form-messages" aria-live="polite">
+                    {% for message in messages %}
+                        <div class="message {{ message.tags }}" role="alert">
+                            <span>{{ message }}</span>
+
+                            <button
+                                type="button"
+                                class="message-close"
+                                aria-label="Close notification"
+                                onclick="this.parentElement.remove()"
+                            >
+                                &times;
+                            </button>
+                        </div>
+                    {% endfor %}
                 </div>
+            {% endif %}
 
+            <div class="input-box">
+                <label for="fullname">Full Name</label>
+                <input
+                    type="text"
+                    id="fullname"
+                    name="fullname"
+                    placeholder="Full Name"
+                    value="{{ fullname }}"
+                    autocomplete="name"
+                    required
+                >
             </div>
 
-        </article>
+            <div class="input-box">
+                <label for="emailaddress">Email Address</label>
+                <input
+                    type="email"
+                    id="emailaddress"
+                    name="emailaddress"
+                    placeholder="Email Address"
+                    value="{{ emailaddress }}"
+                    autocomplete="email"
+                    required
+                >
+            </div>
 
-        {% empty %}
+            <div class="input-box">
+                <label for="mobilenumber">Mobile Number</label>
+                <input
+                    type="tel"
+                    id="mobilenumber"
+                    name="mobilenumber"
+                    placeholder="Mobile Number"
+                    value="{{ mobilenumber }}"
+                    autocomplete="tel"
+                >
+            </div>
 
-        <p>No projects have been added yet.</p>
+            <div class="input-box">
+                <label for="emailsubject">Subject</label>
+                <input
+                    type="text"
+                    id="emailsubject"
+                    name="emailsubject"
+                    placeholder="Email Subject"
+                    value="{{ emailsubject }}"
+                    required
+                >
+            </div>
 
-        {% endfor %}
+            <div class="input-box">
+                <label for="message">Message</label>
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="8"
+                    placeholder="Your Message"
+                    required
+                ></textarea>
+            </div>
 
-    </div>
-
-</section>
-
-
-<!-- ================= CONTACT ================= -->
-
-<section id="contact" class="section">
-
-    <div class="section-title">
-
-        <h2>Contact me</h2>
-
-    </div>
-
-    <form method="POST" action="{% url 'portfolioapp:home' %}">
-        {% csrf_token %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="message {{ message.tags }}">
-                    <span>{{ message }}</span>
-
-                    <button
-                        type="button"
-                        class="message-close"
-                        onclick="this.parentElement.remove()"
-                        aria-label="Close notification"
-                    >
-                        &times;
-                    </button>
-                </div>
-            {% endfor %}
-        {% endif %}
-        <div class="input-box">
-            <input type="text" placeholder="Full Name" name="fullname" value="{{ fullname }}">
-        </div>
-
-        <div class="input-box">
-            <input type="email" placeholder="Email Address" name="emailaddress" value="{{ emailaddress }}">
-        </div>
-
-        <div class="input-box">
-            <input type="number" placeholder="Mobile number" name="mobilenumber" value="{{ mobilenumber }}">
-        </div>
-
-        <div class="input-box">
-            <input type="text" placeholder="Email Subject" name="emailsubject" value="{{ emailsubject }}">
-        </div>
-
-        <div class="input-box">
-            <textarea id='' cols="30" rows="10" placeholder="Your Message" name="message"></textarea>
-        </div>
-        
-        <div class="submit-button">
-            <input id="Submit-button" type="submit" value="Send Message" class="btn">
-        </div>
-    </form>
-
-    
-
-</section>
+            <div class="submit-button">
+                <button
+                    id="submit-button"
+                    type="submit"
+                    class="btn"
+                >
+                    Send Message
+                </button>
+            </div>
+        </form>
+    </section>
 
 {% else %}
 
-<section id="home" class="section" style="text-align: center;">
-    <div class="container">
-        <h2>No profile has been created yet.</h2>
-    </div>
-
-    <div class="footer-icon-top">
-        <a href="#home"><i class="bx bx-up-arrow-alt"></i></a>
-    </div>
-</section>
+    <!-- ================= NO PROFILE ================= -->
+    <section class="section no-profile">
+        <div class="container">
+            <h2>No profile has been created yet.</h2>
+        </div>
+    </section>
 
 {% endif %}
 
+<!-- ================= FOOTER ================= -->
 <footer id="footer" class="footer">
     <div class="footer-message">
-        <p>Copyright &copy; 2026 by Kelvin | All Rights Reserved</p>
+        <p>
+            Copyright &copy; {% now "Y" %} by Kelvin | All Rights Reserved
+        </p>
 
-        <a href="{{ profile.github }}">
-            <i class="fab fa-github"></i>
-        </a>
+        {% if profile %}
+            {% if profile.github %}
+                <a
+                    href="{{ profile.github }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub"
+                >
+                    <i class="fa-brands fa-github" aria-hidden="true"></i>
+                </a>
+            {% endif %}
 
-        <a href="{{ profile.linkedin }}">
-            <i class="fab fa-linkedin"></i>
-        </a>
+            {% if profile.linkedin %}
+                <a
+                    href="{{ profile.linkedin }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                >
+                    <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                </a>
+            {% endif %}
 
-        <a href="mailto:{{ profile.email }}">
-            <i class="fas fa-envelope"></i>
-        </a>
-
+            {% if profile.email %}
+                <a
+                    href="mailto:{{ profile.email }}"
+                    aria-label="Email"
+                >
+                    <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                </a>
+            {% endif %}
+        {% endif %}
     </div>
 </footer>
 
