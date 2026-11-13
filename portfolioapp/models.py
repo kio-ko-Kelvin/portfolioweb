@@ -58,7 +58,7 @@ class Project(models.Model):
 class ContactMessage(models.Model):
     fullname = models.CharField(max_length=50)
 
-    emailaddress = models.URLField(blank=False, null=False, max_length=50)
+    emailaddress = models.EmailField(blank=False, null=False, max_length=50)
 
     mobilenumber = models.IntegerField()
 
