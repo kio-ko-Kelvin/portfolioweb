@@ -109,6 +109,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.vercel.app",
+]
+
+SECURE_PROXY_SSL_HEADER = (
+    "HTTP_X_FORWARDED_PROTO",
+    "https",
+)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
